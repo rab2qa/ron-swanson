@@ -54,7 +54,7 @@ button:focus {
 }
 
 .large-button {
-    padding: 5px 108px;
+    padding: 5px 150px;
 }
 
 .center {
@@ -63,6 +63,10 @@ button:focus {
 
 .inline {
     display: inline-block;
+}
+
+.full-width {
+    width: 100vw;
 }
 
 .panel {

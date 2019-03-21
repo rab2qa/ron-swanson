@@ -12,6 +12,10 @@ class App extends Component {
         quotes: []
     }
 
+    componentDidMount() {
+        this.getQuote();
+     }
+
     getQuote(filter) {
         axios.get(`${serverURL}v2/quotes/${numQuotes}?filter=${filter}`)
             .then(res => {
@@ -38,15 +42,17 @@ class App extends Component {
 
     render() {
         return (
+            <div>
+            <img className="full-width" src={window.location.origin + '/ron-swanson.jpg'} alt="Ron Swanson"/>
             <div className="panel center">
-                <h1>Ron Swanson Quote of the Day</h1>
+                <h1>Quote of the Day</h1>
                 <div>
-                    <button className="large-button" onClick={() => this.getQuote()}>Get Quote</button>
+                    <button className="large-button" onClick={() => this.getQuote()}>New Quote</button>
                 </div>
                 <div>
-                    <button onClick={() => this.getQuote('small')}>Small</button>
-                    <button onClick={() => this.getQuote('medium')}>Medium</button>
-                    <button onClick={() => this.getQuote('large')}>Large</button>
+                    <button onClick={() => this.getQuote('small')}>Beginner</button>
+                    <button onClick={() => this.getQuote('medium')}>Intermediate</button>
+                    <button onClick={() => this.getQuote('large')}>Advanced</button>
                 </div>
                 <ul>
                     {this.state.quotes.map(quote =>
@@ -77,6 +83,7 @@ class App extends Component {
                     )}
                 </ul>
             </div>
+        </div>
         );
     }
 }
