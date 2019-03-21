@@ -11,6 +11,7 @@
 /*************/
 
 const express = require("express");
+const path = require('path');
 const schema = require("./schema.json");
 const bodyParser = require('body-parser');
 
@@ -99,6 +100,7 @@ const filterQuotes = filter => {
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.static(path.join(__dirname, 'build')));
 
 /////////////////
 //             //
@@ -117,6 +119,10 @@ app.all("*", (req, res, next) => {
     res.set('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
 
     next();
+});
+
+app.get('/', function (req, res) {
+    res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
 
 app.get("/v2/quotes/:num?", (req, res) => {
