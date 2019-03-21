@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 //////////////////////////
 //                      //
@@ -10,18 +10,18 @@
 /* FRAMEWORK */
 /*************/
 
-const express = require("express");
+const express = require('express');
 const path = require('path');
-const schema = require("./schema.json");
+const schema = require('./schema.json');
 const bodyParser = require('body-parser');
 
 /**********/
 /* MODELS */
 /**********/
 
-const User = require("./models/user");
-const Quote = require("./models/quote");
-const Rating = require("./models/rating");
+const User = require('./models/user');
+const Quote = require('./models/quote');
+const Rating = require('./models/rating');
 
 /////////////////////
 //                 //
@@ -33,15 +33,15 @@ const app = express();
 const port = process.env.PORT || 3001;
 
 const users = {};
-const quotes = require("./quotes").map(value => new Quote(value)) || [];
+const quotes = require('./quotes').map(value => new Quote(value)) || [];
 
-const dateFormatter = new Intl.DateTimeFormat("en-GB", {
-    year: "numeric",
-    month: "numeric",
-    day: "numeric",
-    hour: "numeric",
-    minute: "numeric",
-    second: "numeric",
+const dateFormatter = new Intl.DateTimeFormat('en-GB', {
+    year: 'numeric',
+    month: 'numeric',
+    day: 'numeric',
+    hour: 'numeric',
+    minute: 'numeric',
+    second: 'numeric',
 });
 
 //////////////////////////////
@@ -128,14 +128,14 @@ app.use(express.static(path.join(__dirname, 'build')));
 //             //
 /////////////////
 
-app.all("*", (req, res, next) => {
+app.all('*', (req, res, next) => {
     console.log(`${dateFormatter.format(new Date())} - request for ${req.path}`);
 
     // If this is a new user then create a profile for them
     users[req.ip] = users[req.ip] || new User();
 
-    res.set("Access-Control-Allow-Origin", "*");
-    res.set("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Cache-Control");
+    res.set('Access-Control-Allow-Origin', '*');
+    res.set('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Cache-Control');
     res.set('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
 
     next();
@@ -153,7 +153,7 @@ app.get('/', function (req, res) {
 /* QUOTES */
 /**********/
 
-app.get("/v2/quotes/:num?", (req, res) => {
+app.get('/v2/quotes/:num?', (req, res) => {
     const user = users[req.ip];
 
     // Get a list of randomQuotes
@@ -180,7 +180,7 @@ app.get("/v2/quotes/:num?", (req, res) => {
             }
         })));
     } catch (e) {
-        console.log("error attempting to stringify quote");
+        console.log('error attempting to stringify quote');
         res.end();
     }
 });
@@ -189,8 +189,8 @@ app.get("/v2/quotes/:num?", (req, res) => {
 /* SCHEMA */
 /**********/
 
-app.get("/v2/schema", (req, res) => {
-    res.set("Cache-Control", "max-age=172800, stale-while-revalidate=3600");
+app.get('/v2/schema', (req, res) => {
+    res.set('Cache-Control', 'max-age=172800, stale-while-revalidate=3600');
     res.json(schema);
 });
 
@@ -212,7 +212,7 @@ app.post('/v2/rating', function (req, res) {
                 try {
                     res.send(JSON.stringify(quote.getAggregateRating()));
                 } catch (e) {
-                    console.log("error attempting to stringify aggregate rating");
+                    console.log('error attempting to stringify aggregate rating');
                     res.end();
                 }
             }
@@ -229,5 +229,5 @@ app.post('/v2/rating', function (req, res) {
 ////////////////////
 
 app.listen(port, () => {
-    console.log("Server running on port", port);
+    console.log('Server running on port', port);
 });
