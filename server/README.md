@@ -10,6 +10,10 @@ The server generates an in-memory object-relational model with the followng beha
 
 Users and quotes are linked together via ratings.
 
+# Server start
+
+node server.js (runs on port 3001 by default)
+
 ## APIs
 
 ### `GET /v2/quotes`
