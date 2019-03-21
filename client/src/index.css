@@ -17,13 +17,13 @@ h1 {
     color: #e85a4f;
 }
 
-ul li {
-    list-style: none;
+ul {
+    padding: 0;
 }
 
-li>div {
-    display: inline-block;
-    margin: -8px 4px;
+ul li {
+    list-style: none;
+    margin-bottom: 25px;
 }
 
 li>span {
@@ -61,14 +61,27 @@ button:focus {
     text-align: center;
 }
 
+.inline {
+    display: inline-block;
+}
+
 .panel {
     border: 3px solid #e98074;
     border-radius: 5px;
     margin: 20px 20px;
+    padding: 20px 20px;
     background-color: #eae7dc;
     color: #e85a4f;
 }
 
 .highlight {
     color: #8e8d8a;
+}
+
+.highlight2 {
+    color: #e85a4f;
+}
+
+.quote {
+    font-style: italic;
 }

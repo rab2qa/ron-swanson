@@ -51,19 +51,28 @@ class App extends Component {
                 <ul>
                     {this.state.quotes.map(quote =>
                         <li key={quote.id}>
-                            <ReactStars
-                                count={5}
-                                value={quote.userRating || 0}
-                                onChange={(newRating) => this.updateRating(quote, newRating)}
-                                size={24}
-                                half={false}
-                                color1={'#8e8d8a'}
-                                color2={'#e85a4f'}
-                            />
-                            <span className="highlight">(</span>
-                            <span>{quote.aggregateRating || 'not rated'}</span>
-                            <span className="highlight">)</span>
-                            <span>{quote.value}</span>
+                            <div className="quote">
+                                "{quote.value}"
+                            </div>
+                            <div className="inline">
+                                <ReactStars
+                                    count={5}
+                                    value={quote.userRating || 0}
+                                    onChange={(newRating) => this.updateRating(quote, newRating)}
+                                    size={48}
+                                    half={false}
+                                    color1={'#8e8d8a'}
+                                    color2={'#e85a4f'}
+                                />
+                            </div>
+                            { quote.aggregateRating &&
+                                <div className="highlight">
+                                    <span>Average User Rating </span>
+                                    <span className="highlight2">(</span>
+                                    <span>{quote.aggregateRating || 'not rated'}</span>
+                                    <span className="highlight2">)</span>
+                                </div>
+                            }
                         </li>
                     )}
                 </ul>
