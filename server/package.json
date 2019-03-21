@@ -1,0 +1,32 @@
+{
+  "name": "ron-swanson-quotes",
+  "version": "2.1.1",
+  "description": "An API for retrieving Ron Swanson quotes",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jamesseanwright/ron-swanson-quotes"
+  },
+  "keywords": [
+    "ron",
+    "swanson",
+    "quotes",
+    "parks",
+    "recreation"
+  ],
+  "author": "James Wright",
+  "license": "Apache 2.0",
+  "bugs": {
+    "url": "https://github.com/jamesseanwright/ron-swanson-quotes/issues"
+  },
+  "homepage": "https://github.com/jamesseanwright/ron-swanson-quotes",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "4.11.0"
+  },
+  "engines": {
+    "node": "8.x.x"
+  }
+}
