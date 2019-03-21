@@ -50,7 +50,9 @@ const dateFormatter = new Intl.DateTimeFormat("en-GB", {
 //                          //
 //////////////////////////////
 
-const range = count => Array(count).fill(null);
+/***********************/
+/* APPEND RANDOM QUOTE */
+/***********************/
 
 const appendRandomQuote = (currentQuotes, filter) => {
     let filteredQuotes = filterQuotes(filter);
@@ -64,11 +66,9 @@ const appendRandomQuote = (currentQuotes, filter) => {
         ];
 };
 
-const getQuote = id =>
-    quotes.find(quote => quote.id === id);
-
-const getRandomQuotes = (quoteCount, filter) =>
-    range(Math.min(quoteCount, quotes.length)).reduce(out => appendRandomQuote(out, filter), []);
+/*****************/
+/* FILTER QUOTES */
+/*****************/
 
 const filterQuotes = filter => {
     switch (filter) {
@@ -91,6 +91,26 @@ const filterQuotes = filter => {
             return quotes;
     }
 };
+
+/*********************/
+/* GET RANDOM QUOTES */
+/*********************/
+
+const getRandomQuotes = (quoteCount, filter) =>
+    range(Math.min(quoteCount, quotes.length)).reduce(out => appendRandomQuote(out, filter), []);
+
+/*************/
+/* GET QUOTE */
+/*************/
+
+const getQuote = id =>
+    quotes.find(quote => quote.id === id);
+
+/*********/
+/* RANGE */
+/*********/
+
+const range = count => Array(count).fill(null);
 
 ////////////////////////////
 //                        //
@@ -121,9 +141,17 @@ app.all("*", (req, res, next) => {
     next();
 });
 
+/***************/
+/* ENTRY POINT */
+/***************/
+
 app.get('/', function (req, res) {
     res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
+
+/**********/
+/* QUOTES */
+/**********/
 
 app.get("/v2/quotes/:num?", (req, res) => {
     const user = users[req.ip];
@@ -141,21 +169,34 @@ app.get("/v2/quotes/:num?", (req, res) => {
     });
 
     // Send response
-    res.send(JSON.stringify(randomQuotes.map(randomQuote => {
-        const userRating = randomQuote.getUserRating(user);
-        return {
-            id: randomQuote.id,
-            userRating: userRating ? userRating.value : null,
-            aggregateRating: randomQuote.getAggregateRating(),
-            value: randomQuote.value
-        }
-    })));
+    try {
+        res.send(JSON.stringify(randomQuotes.map(randomQuote => {
+            const userRating = randomQuote.getUserRating(user);
+            return {
+                id: randomQuote.id,
+                userRating: userRating ? userRating.value : null,
+                aggregateRating: randomQuote.getAggregateRating(),
+                value: randomQuote.value
+            }
+        })));
+    } catch (e) {
+        console.log("error attempting to stringify quote");
+        res.end();
+    }
 });
+
+/**********/
+/* SCHEMA */
+/**********/
 
 app.get("/v2/schema", (req, res) => {
     res.set("Cache-Control", "max-age=172800, stale-while-revalidate=3600");
     res.json(schema);
 });
+
+/**********/
+/* RATING */
+/**********/
 
 app.post('/v2/rating', function (req, res) {
     const quoteID = parseInt(req.body.quoteID, 10)
@@ -168,10 +209,17 @@ app.post('/v2/rating', function (req, res) {
             const userRating = quote.getUserRating(user);
             if (Number.isInteger(newRating) && newRating >= 0 && newRating <= 5) {
                 userRating.value = newRating;
-                res.send(JSON.stringify(quote.getAggregateRating()));
+                try {
+                    res.send(JSON.stringify(quote.getAggregateRating()));
+                } catch (e) {
+                    console.log("error attempting to stringify aggregate rating");
+                    res.end();
+                }
             }
         }
     }
+
+    res.end();
 });
 
 ////////////////////
