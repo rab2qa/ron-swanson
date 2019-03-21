@@ -5,7 +5,7 @@ Modified from the original api to allow for users (uniquely identified by their 
 The server generates an in-memory object-relational model with the followng behavior:
 
 ### User - has many ratings
-### Rating - has many users and many quotes
+### Rating - has one user and one quote
 ### Quote - has many ratings
 
 Users and quotes are linked together via ratings.
