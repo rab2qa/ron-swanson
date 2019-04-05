@@ -1,8 +1,8 @@
 # Ron Swanson quotes Server
 
-Modified from the original api to allow for users (uniquely identified by their IP) and ratings.
+A simple API that allows users (uniquely identified by their IP) to view and rate Ron Swanson Quotes.
 
-The server generates an in-memory object-relational model with the followng behavior:
+The server generates an in-memory object-relational model with the followng relationships:
 
 ### User - has many ratings
 ### Rating - has one user and one quote
